@@ -1,18 +1,19 @@
 package com.example.jomosque.facebooklogin;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.w3c.dom.Text;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,31 +32,37 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
-        callbackManager = CallbackManager.Factory.create();
+
         loginButton = (LoginButton)findViewById(R.id.fb_login_bn);
         textView = (TextView)findViewById(R.id.textView);
 
+        callbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                textView.setText("Login Succeed \n" +
-                loginResult.getAccessToken().getUserId() + "\n" +
-                loginResult.getAccessToken().getToken());
+                Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_LONG).show();
+
+
             }
 
             @Override
             public void onCancel() {
-                textView.setText("Login Cancelled");
+                Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_LONG).show();
+
+
             }
 
             @Override
             public void onError(FacebookException error) {                  textView.setText("Login Error");
+                Toast.makeText(getApplicationContext(), "msg msg", Toast.LENGTH_LONG).show();
+
             }
         });
 
     }
 
-    protected void onActivyResult(int requestCode, int resultCode, Intent data){
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
 }
